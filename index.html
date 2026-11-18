@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KEYGEN // THIÊN TRẦN</title>
+<style>
+  body{background:#050507;color:#cfcfcf;font-family:monospace;padding:20px;margin:0}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{color:#ff2d55;font-size:20px;letter-spacing:4px;margin:0 0 4px;text-shadow:0 0 10px rgba(255,45,85,.6)}
+  .sub{color:#5a5a5a;font-size:11px;margin-bottom:24px}
+  .box{background:#0a0a0d;border:1px solid #ff2d55;padding:24px;margin-bottom:20px;box-shadow:0 0 20px rgba(255,45,85,.15)}
+  .row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+  .label{color:#ff2d55;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  button{padding:10px 18px;background:#ff2d55;color:#000;border:1px solid #ff2d55;font-family:inherit;font-size:12px;font-weight:bold;cursor:pointer;letter-spacing:1px}
+  button:hover{background:#ff4066}
+  button.sec{background:#0d0d0f;color:#cfcfcf;border-color:#222}
+  button.sec:hover{border-color:#ff2d55;color:#ff2d55;background:#0d0d0f}
+  button.del{background:#0d0d0f;color:#ff2d55;border-color:#ff2d55}
+  input{padding:10px;background:#000;border:1px solid #222;color:#ff2d55;font-family:inherit;font-size:12px;outline:none;width:100%;box-sizing:border-box}
+  input:focus{border-color:#ff2d55}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th,td{padding:8px;border-bottom:1px solid #1a1a1a;text-align:left}
+  th{color:#ff2d55;text-transform:uppercase;letter-spacing:1px;font-size:10px}
+  td{color:#aaa}
+  td.key{color:#3f3;font-family:monospace;letter-spacing:.5px;word-break:break-all}
+  td.exp{color:#fa3}
+  .empty{color:#444;text-align:center;padding:20px;font-style:italic}
+  .out{background:#000;border:1px solid #3f3;padding:12px;margin-top:12px;color:#3f3;font-size:12px;word-break:break-all;display:none}
+  .out.show{display:block}
+
+  #gate{position:fixed;inset:0;z-index:100;background:#050507;display:flex;align-items:center;justify-content:center;padding:20px}
+  #gate.h{display:none}
+  .gate-box{background:#0a0a0d;border:1px solid #ff2d55;padding:40px 32px;max-width:420px;width:100%;box-shadow:0 0 30px rgba(255,45,85,.3)}
+  .gate-title{color:#ff2d55;font-size:20px;font-weight:bold;letter-spacing:4px;text-transform:uppercase;text-align:center;margin-bottom:6px;text-shadow:0 0 10px rgba(255,45,85,.7)}
+  .gate-sub{color:#555;font-size:11px;text-align:center;letter-spacing:2px;margin-bottom:28px;text-transform:uppercase}
+  #gi{width:100%;padding:12px 14px;background:#000;border:1px solid #222;color:#ff2d55;font-family:inherit;font-size:13px;margin-bottom:16px;outline:none;box-sizing:border-box}
+  #gi:focus{border-color:#ff2d55}
+  #gb{width:100%;padding:12px;background:#ff2d55;color:#000;border:1px solid #ff2d55;font-family:inherit;font-size:13px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
+  #gb:hover{background:#ff4066}
+  #gm{color:#ff2d55;font-size:12px;text-align:center;margin-top:14px;min-height:16px}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-title">KEYGEN // THIÊN TRẦN</div>
+    <div class="gate-sub">// admin access //</div>
+    <input type="password" id="gi" placeholder="nhập key admin..." autocomplete="off">
+    <button id="gb">xác nhận</button>
+    <div id="gm"></div>
+  </div>
+</div>
+
+<div class="wrap" id="body" style="display:none">
+  <h1>KEYGEN // THIÊN TRẦN</h1>
+  <div class="sub">// admin panel · key tạo ra bind 1 máy · dùng với tool.html</div>
+
+  <div class="box">
+    <div class="label">// tạo key mới</div>
+    <div class="row">
+      <input id="labelIn" placeholder="nhãn / tên người dùng (tùy chọn)" style="flex:1;min-width:200px">
+      <button onclick="gen(1)">1 ngày</button>
+      <button onclick="gen(7)">7 ngày</button>
+      <button onclick="gen(30)">30 ngày</button>
+    </div>
+    <div class="out" id="out"></div>
+  </div>
+
+  <div class="box">
+    <div class="label">// danh sách key</div>
+    <table>
+      <thead><tr><th>key</th><th>nhãn</th><th>hạn</th><th>trạng thái</th><th></th></tr></thead>
+      <tbody id="tbody"><tr><td colspan="5" class="empty">chưa có key nào. tạo đi.</td></tr></tbody>
+    </table>
+    <div class="row" style="margin-top:16px">
+      <button class="sec" onclick="copyAll()">copy tất cả key</button>
+      <button class="sec" onclick="exportDb()">export json</button>
+      <button class="sec" onclick="importDb()">import json</button>
+      <button class="del" onclick="clearAll()">xóa hết</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+var lsG=function(k){try{return localStorage.getItem(k)}catch(e){return null}};
+var lsS=function(k,v){try{localStorage.setItem(k,v)}catch(e){}};
+var lsD=function(k){try{localStorage.removeItem(k)}catch(e){}};
+
+var ADMIN='THIENTRANNHAVUACODUACONGARENA';
+var KB='tt_keys_db_v1';
+var GB='tt_admin_gate_v1';
+
+/* ===== gate ===== */
+function tryGate(){
+  var v=($('gi').value||'').trim(),m=$('gm');
+  if(!v){m.textContent='✘ key rỗng';return}
+  if(v!==ADMIN){m.textContent='✘ key sai';$('gi').value='';return}
+  lsS(GB,ADMIN);
+  m.textContent='✔ đúng. đang mở...';m.style.color='#3f3';
+  setTimeout(function(){
+    $('gate').className='h';
+    $('body').style.display='block';
+    render();
+  },300);
+}
+
+$('gb').onclick=tryGate;
+$('gi').addEventListener('keydown',function(e){if(e.key==='Enter')tryGate()});
+
+(function autoGate(){
+  try{ if(lsG(GB)===ADMIN){ $('gate').className='h'; $('body').style.display='block'; render(); } }catch(e){}
+})();
+
+/* ===== keygen ===== */
+function loadDb(){try{var r=lsG(KB);return r?JSON.parse(r)||{}:{}}catch(e){return{}}}
+function saveDb(db){lsS(KB,JSON.stringify(db))}
+
+/* seed key vĩnh viễn nếu chưa có */
+(function seed(){
+  try{
+    var db=loadDb();
+    if(!db[ADMIN]){
+      db[ADMIN]={days:0,label:'VĨNH VIỄN',createdAt:Date.now(),revoked:false};
+      saveDb(db);
+    }
+  }catch(e){}
+})();
+
+function randKey(){
+  var chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+  var len=24,o='';
+  if(window.crypto&&window.crypto.getRandomValues){
+    var a=new Uint8Array(len);window.crypto.getRandomValues(a);
+    for(var i=0;i<len;i++)o+=chars.charAt(a[i]%chars.length);
+  }else{
+    for(var j=0;j<len;j++)o+=chars.charAt(Math.random()*chars.length|0);
+  }
+  return o;
+}
+
+function gen(days){
+  var label=($('labelIn').value||'').trim();
+  var db=loadDb();
+  var key,tries=0;
+  do{key=randKey();tries++}while(db[key]&&tries<10);
+
+  db[key]={
+    days:days,
+    label:label||(days+' ngày'),
+    createdAt:Date.now(),
+    revoked:false
+  };
+  saveDb(db);
+
+  var o=$('out');
+  o.className='out show';
+  o.innerHTML='✔ đã tạo key <b>'+days+' NGÀY</b>:<br><br>'+
+    '<span style="font-size:16px;letter-spacing:1px">'+key+'</span><br><br>'+
+    '<span style="color:#666;font-size:11px">key bind 1 máy, đếm từ lúc kích hoạt. đưa key cho người dùng → họ mở tool.html nhập.</span>';
+
+  render();
+}
+
+function render(){
+  var db=loadDb();
+  var tb=$('tbody');
+  var keys=Object.keys(db);
+  if(!keys.length){
+    tb.innerHTML='<tr><td colspan="5" class="empty">chưa có key nào. tạo đi.</td></tr>';
+    return;
+  }
+  keys.sort(function(a,b){return (db[b].createdAt||0)-(db[a].createdAt||0)});
+  var html='';
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i],e=db[k];
+    var exp=e.days===0?'∞':e.days+' ngày';
+    var st=e.revoked?'<span style="color:#ff2d55">revoked</span>':'<span style="color:#3f3">active</span>';
+    var sk=k.replace(/'/g,"\\'");
+    html+='<tr>'+
+      '<td class="key">'+k+'</td>'+
+      '<td>'+(e.label||'-')+'</td>'+
+      '<td class="exp">'+exp+'</td>'+
+      '<td>'+st+'</td>'+
+      '<td style="text-align:right;white-space:nowrap">'+
+        '<button class="sec" onclick="copyK(\''+sk+'\')" style="padding:4px 8px;font-size:10px">copy</button> '+
+        '<button class="sec" onclick="revoke(\''+sk+'\')" style="padding:4px 8px;font-size:10px">'+(e.revoked?'unrevoke':'revoke')+'</button> '+
+        '<button class="del" onclick="delK(\''+sk+'\')" style="padding:4px 8px;font-size:10px">xóa</button>'+
+      '</td>'+
+    '</tr>';
+  }
+  tb.innerHTML=html;
+}
+
+function copyK(k){
+  try{navigator.clipboard.writeText(k);alert('đã copy: '+k)}
+  catch(e){prompt('copy key:',k)}
+}
+
+function revoke(k){
+  var db=loadDb();if(!db[k])return;
+  db[k].revoked=!db[k].revoked;
+  saveDb(db);render();
+}
+
+function delK(k){
+  if(!confirm('xóa key '+k+'?'))return;
+  var db=loadDb();delete db[k];
+  saveDb(db);render();
+}
+
+function clearAll(){
+  if(!confirm('xóa HẾT key? không hoàn tác'))return;
+  lsD(KB);render();
+}
+
+function copyAll(){
+  var db=loadDb();
+  var keys=Object.keys(db);
+  if(!keys.length)return alert('chưa có key nào');
+  var text='';
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i],e=db[k];
+    text+=k+' | '+(e.days===0?'VĨNH VIỄN':e.days+' ngày')+' | '+(e.label||'-')+'\n';
+  }
+  try{navigator.clipboard.writeText(text);alert('đã copy '+keys.length+' key vào clipboard')}
+  catch(e){prompt('copy all keys:',text)}
+}
+
+function exportDb(){
+  var db=loadDb();
+  var blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='tt_keys_'+Date.now()+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url)},1500);
+}
+
+function importDb(){
+  var inp=document.createElement('input');
+  inp.type='file';inp.accept='.json,application/json';
+  inp.onchange=function(){
+    var f=inp.files&&inp.files[0];if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){
+      try{
+        var obj=JSON.parse(r.result);
+        if(typeof obj!=='object'||Array.isArray(obj))throw new Error('bad format');
+        var db=loadDb();
+        for(var k in obj)if(obj.hasOwnProperty(k))db[k]=obj[k];
+        saveDb(db);render();
+        alert('import xong. '+Object.keys(obj).length+' key');
+      }catch(e){alert('file json lỗi: '+e.message)}
+    };
+    r.readAsText(f);
+  };
+  inp.click();
+}
+</script>
+</body>
+</html>
